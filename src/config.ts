@@ -8,7 +8,7 @@ export const PATHS = {
   statsCache: join(CLAUDE_DIR, "stats-cache.json"),
   history: join(CLAUDE_DIR, "history.jsonl"),
   projects: join(CLAUDE_DIR, "projects"),
-  facetsDir: join(homedir(), ".claude-insights", "facets"),
+  facetsDir: join(homedir(), ".claude-analytics", "facets"),
 };
 
 // Per 1M tokens (output tokens use same rate for simplicity where not split)
@@ -49,7 +49,7 @@ export const MODEL_PRICING: Record<
 };
 
 export const DEFAULTS = {
-  output: "./claude-insights.html",
+  output: "./claude-analytics.html",
   concurrency: 5,
   maxSessions: 200,
 };

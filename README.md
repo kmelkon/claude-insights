@@ -1,4 +1,4 @@
-# claude-insights
+# claude-analytics
 
 Personal analytics dashboard for Claude Code. Reads your local `~/.claude/` data, optionally runs LLM analysis, and outputs a self-contained interactive HTML dashboard.
 
@@ -27,8 +27,8 @@ Personal analytics dashboard for Claude Code. Reads your local `~/.claude/` data
 ## Installation
 
 ```bash
-git clone https://github.com/kmelkon/claude-insights.git
-cd claude-insights
+git clone https://github.com/kmelkon/claude-analytics.git
+cd claude-analytics
 npm install
 ```
 
@@ -61,7 +61,7 @@ bun run src/cli.ts --clear-cache
 
 | Flag | Description | Default |
 |---|---|---|
-| `-o, --output <path>` | Output HTML file | `./claude-insights.html` |
+| `-o, --output <path>` | Output HTML file | `./claude-analytics.html` |
 | `--no-llm` | Skip LLM analysis | |
 | `--project <name>` | Filter to a single project | |
 | `--days <number>` | Limit to last N days | |
@@ -111,7 +111,7 @@ Uses `claude-opus-4-6` by default — update the model in `src/llm/client.ts` to
 
 ### LLM pipeline
 
-Facets are cached at `~/.claude-insights/facets/` so subsequent runs only analyze new sessions. The synthesis prompt receives enriched context including project names, task distributions, tool frequency, and behavioral patterns to produce deeply personalized insights rather than generic advice.
+Facets are cached at `~/.claude-analytics/facets/` so subsequent runs only analyze new sessions. The synthesis prompt receives enriched context including project names, task distributions, tool frequency, and behavioral patterns to produce deeply personalized insights rather than generic advice.
 
 ## Data sources
 

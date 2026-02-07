@@ -18,7 +18,7 @@ import type { DashboardData, SessionEntry } from "./types.js";
 const num = (v: string) => parseInt(v, 10);
 
 const program = new Command()
-  .name("claude-insights")
+  .name("claude-analytics")
   .description("Personal Claude Code analytics dashboard")
   .option("-o, --output <path>", "Output HTML file", DEFAULTS.output)
   .option("--no-llm", "Skip LLM analysis")
@@ -115,7 +115,7 @@ async function main() {
 
   // 7. Summary
   console.log();
-  console.log(chalk.bold("  Claude Insights Dashboard"));
+  console.log(chalk.bold("  Claude Analytics Dashboard"));
   console.log(chalk.dim("  ─────────────────────────"));
   console.log(`  ${chalk.cyan("Sessions:")}    ${allSessions.length}`);
   console.log(`  ${chalk.cyan("Projects:")}    ${projects.length}`);

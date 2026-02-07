@@ -69,14 +69,14 @@ export function renderHTML(data: DashboardData): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Claude Insights Dashboard</title>
+  <title>Claude Analytics Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <style>${getStyles()}</style>
 </head>
 <body>
   <nav class="sidebar">
     <div class="sidebar-header">
-      <h1>Claude Insights</h1>
+      <h1>Claude Analytics</h1>
       <p class="subtitle">Personal Analytics</p>
     </div>
     <a href="#overview">Overview</a>
