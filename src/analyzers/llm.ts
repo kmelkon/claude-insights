@@ -2,11 +2,8 @@ import pLimit from "p-limit";
 import type { SessionEntry, SessionFacet, LLMSynthesis, ProjectAnalysis } from "../types.js";
 import { readFacet, writeFacet, clearCache as clearFacetCache } from "../llm/cache.js";
 import { getFacetExtractionPrompt, getSynthesisPrompt } from "../llm/prompts.js";
-import { callLLM } from "../llm/client.js";
+import { callLLM, defaultModel } from "../llm/client.js";
 import { readCondensedTranscript } from "../readers/transcripts.js";
-
-const FACET_MODEL = "claude-opus-4-6";
-const SYNTHESIS_MODEL = "claude-opus-4-6";
 
 interface AnalyzeLLMOptions {
   maxSessions: number;
@@ -50,7 +47,7 @@ export async function analyzeLLM(
           }
 
           const { system, content } = getFacetExtractionPrompt(transcript);
-          const raw = await callLLM({ model: FACET_MODEL, system, content });
+          const raw = await callLLM({ model: defaultModel, system, content });
           if (!raw) {
             done++;
             options.onProgress?.(done, eligible.length);
@@ -76,7 +73,7 @@ export async function analyzeLLM(
   const facets = facetResults.filter((f): f is SessionFacet => f !== null);
 
   const { system, content } = getSynthesisPrompt(facets, sessions.length, options.projects);
-  const synthRaw = await callLLM({ model: SYNTHESIS_MODEL, system, content, maxTokens: 8192 });
+  const synthRaw = await callLLM({ model: defaultModel, system, content, maxTokens: 8192 });
 
   let synthesis: LLMSynthesis;
   try {

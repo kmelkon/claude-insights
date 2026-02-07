@@ -1,6 +1,33 @@
+import Anthropic from "@anthropic-ai/sdk";
 import AnthropicVertex from "@anthropic-ai/vertex-sdk";
 
-const client = new AnthropicVertex({ region: "europe-west1" });
+interface LLMClient {
+  messages: {
+    create(params: {
+      model: string;
+      max_tokens: number;
+      system: string;
+      messages: Array<{ role: string; content: string }>;
+    }): Promise<{ content: Array<{ type: string; text?: string }> }>;
+  };
+}
+
+function createClient(): { client: LLMClient; defaultModel: string } {
+  if (process.env.ANTHROPIC_API_KEY) {
+    return {
+      client: new Anthropic() as unknown as LLMClient,
+      defaultModel: "claude-sonnet-4-5-20250514",
+    };
+  }
+  const region = process.env.CLOUD_ML_REGION || process.env.VERTEX_REGION || "europe-west1";
+  return {
+    client: new AnthropicVertex({ region }) as unknown as LLMClient,
+    defaultModel: "claude-opus-4-6",
+  };
+}
+
+const { client, defaultModel } = createClient();
+export { defaultModel };
 
 interface CallLLMOptions {
   model: string;
@@ -23,7 +50,7 @@ export async function callLLM({ model, system, content, maxTokens = 4096 }: Call
       });
 
       const block = response.content[0];
-      return block.type === "text" ? block.text : "";
+      return block.type === "text" ? (block.text ?? "") : "";
     } catch (err: unknown) {
       const isRateLimit = err instanceof Error && "status" in err && (err as { status: number }).status === 429;
       const isLastAttempt = attempt === MAX_RETRIES - 1;
